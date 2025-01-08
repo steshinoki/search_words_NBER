@@ -15,20 +15,28 @@ def save_data(filepath, data):
         print(f'[ERROR]: Could not save data to {filepath}. {e}')
 
 def search_papers(start, end, filepath):
-    # Search for words in NBER working papers from start to end paper number.
     items = {word: [] for word in words}
 
     while start < end:
+        # Construct the URL for the PDF file
         url = f'https://www.nber.org/system/files/working_papers/w{start}/w{start}.pdf'
         try:
+            # Open the URL and read the PDF file
             print(f'[OPENING URL]: {url}')
             wFile = urllib.request.urlopen(url)
             bytes_stream = BytesIO(wFile.read())
             reader = PdfReader(bytes_stream)
             all_text = ""
+            # Extract text from each page of the PDF
             for page in reader.pages:
-                all_text += page.extract_text().lower()  # Convert text to lowercase
-
+                try:
+                    text = page.extract_text()
+                    if text:
+                        all_text += page.extract_text().lower()  # Convert text to lowercase
+                except ValueError as e:
+                    print(f'[ERROR EXTRACTING TEXT FROM PAGE]: {e}')
+                    
+            # Search for each word in the extracted text
             print(f'[SEARCHING \U0001F50D]')
             for word in words:
                 if word.lower() in all_text and start not in items[word]:
