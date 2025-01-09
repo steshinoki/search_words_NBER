@@ -41,6 +41,10 @@ python pdfsearch.py 10000 10100 --filepath pdfsearch_results.pkl
 
 The results are saved in a pickle file specified by the `--filepath` argument. The file contains a dictionary where keys are the words and values are lists of paper numbers where the words were found.
 
+## Known Limitations
+
+- The code ignores any PDF pages that have characters not recognized during text extraction. This may result in incomplete search results for some papers.
+
 ## License
 
 This project is licensed under the MIT License.
