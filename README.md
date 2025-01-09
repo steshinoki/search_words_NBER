@@ -4,7 +4,7 @@ This project searches for specific words in NBER working papers and saves the re
 
 ## Files
 
-- `words.py`: Contains the list of words to search for.
+- `words.py`: Contains the list of words to search for (optional, you can use the command line).
 - `pdfsearch.py`: Contains the main logic for downloading and searching the PDFs.
 
 ## Requirements
@@ -24,17 +24,18 @@ pip install PyPDF2 requests
 To run the search, use the following command:
 
 ```bash
-python pdfsearch.py <start_paper_number> <end_paper_number> [--filepath <output_filepath>]
+python pdfsearch.py <start_paper_number> <end_paper_number> [--words <word1> <word2> ...] [--filepath <output_filepath>]
 ```
 
 - `<start_paper_number>`: The starting paper number to search.
 - `<end_paper_number>`: The ending paper number to search.
+- `--words <word1> <word2> ...`: (Optional) List of words to search in the papers. If not provided, the script will use the words from `words.py`.
 - `--filepath <output_filepath>`: (Optional) The file path to save the search results. Default is `pdfsearch_results.pkl`.
 
 Example:
 
 ```bash
-python pdfsearch.py 10000 10100 --filepath pdfsearch_results.pkl
+python pdfsearch.py 10000 10100 --words economics inflation --filepath pdfsearch_results.pkl
 ```
 
 ## Output
