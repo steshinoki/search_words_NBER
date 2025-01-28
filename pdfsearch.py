@@ -1,10 +1,31 @@
+"""
+Script to scrape NBER papers and search for words.
+Author: Stéphanie T. Shinoki
+
+Modules:
+    os, argparse, io.BytesIO, PyPDF2.PdfReader, urllib, pickle
+
+Functions:
+    save_data(filepath, data): Saves data to a file using pickle.
+    search_papers(start, end, words_to_search, filepath): Searches for words in NBER papers.
+    main(): Parses command-line arguments and starts the search.
+
+Usage:
+    python pdfsearch.py <start> <end> [--words <word1> <word2> ...] [--filepath <filepath>]
+
+Arguments:
+    start: Start paper number (int).
+    end: End paper number (int).
+    --words: Words to search (default: from words.py).
+    --filepath: Filepath to save results (default: 'pdfsearch_results.pkl').
+"""
 import os
+import urllib
+import pickle
 import argparse
+import pandas as pd
 from io import BytesIO
 from PyPDF2 import PdfReader
-import urllib
-import requests
-import pickle
 
 try:
     from words import words  # Try to import words from words.py
@@ -39,7 +60,7 @@ def search_papers(start, end, words_to_search, filepath):
                         all_text += page.extract_text().lower()  # Convert text to lowercase
                 except ValueError as e:
                     print(f'[ERROR EXTRACTING TEXT FROM PAGE]: {e}')
-                    
+
             # Search for each word in the extracted text
             print(f'[SEARCHING \U0001F50D]')
             for word in words_to_search:
@@ -62,8 +83,7 @@ def main():
     args = parser.parse_args()
 
     if args.words is None:
-        print("Error: words.py not found and no words provided in command line.")
-        sys.exit(1)
+        raise ValueError("Error: words.py not found and no words provided in command line.")
 
     search_papers(args.start, args.end, args.words, args.filepath)
 

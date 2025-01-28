@@ -1,6 +1,6 @@
 # NBER Working Papers Word Search
 
-This project searches for specific words in NBER working papers and saves the results.
+This project scrapes NBER working papers and searches for specific words.
 
 ## Files
 
@@ -11,7 +11,6 @@ This project searches for specific words in NBER working papers and saves the re
 
 - Python 3.x
 - PyPDF2
-- requests
 
 You can install the required packages using:
 
